@@ -51,7 +51,6 @@ class NewVisitorTest(LiveServerTestCase):
 
         #She types "Buy peacock feathers" into a text box
         inputbox.send_keys("Buy peacock feathers")
-        time.sleep(1)
 
         #WHen she hits enter, The page updates, and now the page lists
         #"1: Buy peacock feathers" as an item in a to-do list
@@ -68,7 +67,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_list_table("2: Use peacock feathers to make a fly")
         self.wait_for_row_in_list_table("1: Buy peacock feathers")
        
-        #Satisfiedm she goes back to sleep
+        #Satisfied she goes back to sleep
 
     def test_multiple_users_can_start_list_at_different_urls(self):
         #Edith starts a new to-do list
@@ -90,7 +89,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         #Francis visits the home page. There is no sign of Edith's list
         self.browser.get(self.live_server_url)
-        page_text = self.browser.find_element(By.TAG_NAME, "body").texts
+        page_text = self.browser.find_element(By.TAG_NAME, "body").text
         self.assertNotIn("Buy peacock feathers", page_text)
 
         #Francis starts a new list by entering a new item
