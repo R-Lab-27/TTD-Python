@@ -38,6 +38,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #She types "Buy peacock feathers" into a text box
         inputbox.send_keys("Buy peacock feathers")
+        time.sleep(1)
 
         #WHen she hits enter, The page updates, and now the page lists
         #"1: Buy peacock feathers" as an item in a to-do list
