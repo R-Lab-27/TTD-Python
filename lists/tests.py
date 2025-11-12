@@ -41,7 +41,7 @@ class ListViewTest(TestCase):
     def test_renders_input_form(self):
         mylist = List.objects.create()
         response = self.client.get(f"/lists/{mylist.id}/")
-        self.assertContains(response, '<form method="POST" action="/lists/new">')
+        self.assertContains(response, f'<form method="POST" action="/lists/{mylist.id}/add_item">')
         self.assertContains(response, '<input name="item_text"')
 
     def test_display_only_items_for_that_list(self):
@@ -96,5 +96,25 @@ class ListAndItemModelsTest(TestCase):
         self.assertEqual(first_saved_item.list, mylist)
         self.assertEqual(second_saved_item.text, "Item the second")
         self.assertEqual(second_saved_item.list, mylist)
+
+class NewItemTest(TestCase):
+    def test_can_save_POST_to_existing_file(self):
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+
+        self.client.post(f"/lists/{correct_list.id}/add_item", data={"item_text": "A new item for an existing list"},)
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.get()
+        self.assertEqual(new_item.text, "A new item for an existing list")
+        self.assertEqual(new_item.list, correct_list)
+
+    def test_redirects_to_list_views(self):
+        other_list = List.objects.create()
+        correct_list = list.objects.create()
+
+        response = self.client.post(f"/lists/{correct_list.id}/add_item", data={"item_text": "A new item for an existing list"},)
+        self.assertRedirects(response, f"/lists/{correct_list.id}/")
+
 
 
