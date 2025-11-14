@@ -1,3 +1,4 @@
+import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
@@ -17,6 +18,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         service = Service(executable_path="/snap/bin/geckodriver")
         self.browser = webdriver.Firefox(service=service, options=options)
+        if test_server := os.environ.get("TEST_SERVER"):
+            self.live_server_url = "http://" + test_server
 
     def tearDown(self):
         self.browser.quit()
