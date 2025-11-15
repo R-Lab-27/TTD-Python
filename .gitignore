@@ -2,3 +2,5 @@ db.sqlite3
 tdd
 __pychache__
 *.pyc
+src/db.sqlite3
+src.tar
