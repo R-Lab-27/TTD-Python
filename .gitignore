@@ -4,3 +4,4 @@ __pychache__
 *.pyc
 src/db.sqlite3
 src.tar
+Containerfile
